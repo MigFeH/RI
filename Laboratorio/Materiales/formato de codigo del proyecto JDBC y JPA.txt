@@ -1,0 +1,29 @@
+Aplica la siguiente configuración en el IDE Eclipse / Configure Eclipse as shown
+
+* Window > Preferences > General > Editors > Text Editor
+
+    * Mark ' Show print margin ' 
+
+    * Print margin column: 80
+
+* Window > Preferences > Java > Code Style > Formatter
+
+    * New > Profile Name CWS (por ejemplo)
+
+        - Indentation > Tab policy > Spaces only
+
+                      > Indentation size 4
+
+        - Line Wrapping > Max line width : 80
+
+                        > Default indentation for wrapped lines : 1
+
+                        > Default indentation for array initializers : 1
+
+* Window > Preferences > Java > Editor > Save Actions
+
+    * Mark ' Perform the selected actions on save '
+
+    * Mark ' Organize imports '
+
+    * Mark ' Additional actions '
