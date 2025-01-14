@@ -1,0 +1,332 @@
+// Crear nodos de Bibliotecas   
+
+CREATE (:Biblioteca {nombre: "Biblioteca Central"});  
+
+CREATE (:Biblioteca {nombre: "Biblioteca Norte"});  
+
+CREATE (:Biblioteca {nombre: "Biblioteca Sur"});  
+
+   
+
+ // Crear nodos de Libros  
+
+CREATE (:Libro {titulo: "Don Quijote", isbn: "1234567890"});  
+
+CREATE (:Libro {titulo: "Cien años de soledad", isbn: "0987654321"});  
+
+CREATE (:Libro {titulo: "La Odisea", isbn: "1112131415"});  
+
+CREATE (:Libro {titulo: "El Principito", isbn: "2223334445"});  
+
+CREATE (:Libro {titulo: "1984", isbn: "3334445556"});  
+
+CREATE (:Libro {titulo: "Fahrenheit 451", isbn: "4445556667"});  
+
+CREATE (:Libro {titulo: "Matar a un ruiseñor", isbn: "5556667778"});  
+
+CREATE (:Libro {titulo: "El señor de los anillos", isbn: "6667778889"});  
+
+ 
+
+// Crear nodos de Usuarios   
+
+CREATE (:Usuario {nombre: "Juan", id: 1});  
+
+CREATE (:Usuario {nombre: "María", id: 2});  
+
+CREATE (:Usuario {nombre: "Luis", id: 3});  
+
+CREATE (:Usuario {nombre: "Ana", id: 4});  
+
+CREATE (:Usuario {nombre: "Carlos", id: 5});  
+
+CREATE (:Usuario {nombre: "Sofía", id: 6});  
+
+  
+
+// Crear nodos de Eventos  
+
+CREATE (:Evento {nombre: "Lectura de poesía", fecha: "2024-01-15"});  
+
+CREATE (:Evento {nombre: "Taller de escritura", fecha: "2024-02-20"});  
+
+CREATE (:Evento {nombre: "Cine debate", fecha: "2024-03-10"});  
+
+  
+
+   
+
+// Relaciones TIENE (Biblioteca -> Libro)  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Central"}), (l:Libro)  
+
+WHERE l.titulo IN ["Don Quijote", "Cien años de soledad", "La Odisea"]  
+
+CREATE (b)-[:TIENE]->(l);  
+
+ 
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Norte"}), (l:Libro)   
+
+WHERE l.titulo IN ["El Principito", "1984", "Fahrenheit 451"]  
+
+CREATE (b)-[:TIENE]->(l);  
+
+  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Sur"}), (l:Libro)  
+
+WHERE l.titulo IN ["Matar a un ruiseñor", "El señor de los anillos"]  
+
+CREATE (b)-[:TIENE]->(l);  
+
+  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Sur"}), (l:Libro {titulo: "Don Quijote"}) 
+
+CREATE (b)-[:TIENE]->(l); 
+
+  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Central"}), (l:Libro {titulo: "Fahrenheit 451"}) 
+
+CREATE (b)-[:TIENE]->(l); 
+
+ 
+
+ MATCH (b:Biblioteca {nombre: "Biblioteca Central"}), (l:Libro {titulo: "Matar a un ruiseñor"}) CREATE (b)-[:TIENE]->(l); 
+
+ 
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Norte"}), (l:Libro {titulo: "La Odisea"}) CREATE (b)-[:TIENE]->(l); 
+
+// Relaciones ES_PRESTADO (Libro -> Usuario)  
+
+MATCH (l:Libro {titulo: "Don Quijote"}), (u:Usuario {nombre: "Juan"})  
+
+CREATE (l)-[:ES_PRESTADO]->(u); 
+
+  
+
+MATCH (l:Libro {titulo: "Cien años de soledad"}), (u:Usuario {nombre: "María"})  
+
+CREATE (l)-[:ES_PRESTADO]->(u);  
+
+  
+
+MATCH (l:Libro {titulo: "La Odisea"}), (u:Usuario {nombre: "Luis"})  
+
+CREATE (l)-[:ES_PRESTADO]->(u);  
+
+  
+
+   
+
+MATCH (l:Libro {titulo: "El Principito"}), (u:Usuario {nombre: "Ana"})  
+
+CREATE (l)-[:ES_PRESTADO]->(u);    
+
+  
+
+MATCH (l:Libro {titulo: "1984"}), (u:Usuario {nombre: "Carlos"})  
+
+CREATE (l)-[:ES_PRESTADO]->(u);  
+
+  
+
+MATCH (l:Libro {titulo: "Fahrenheit 451"}), (u:Usuario {nombre: "Sofía"})  
+
+CREATE (l)-[:ES_PRESTADO]->(u);  
+
+  
+
+MATCH (l:Libro {titulo: "Don Quijote"}), (u:Usuario {nombre: "Luis"}) 
+
+CREATE (l)-[:ES_PRESTADO]->(u); 
+
+  
+
+MATCH (l:Libro {titulo: "Cien años de soledad"}), (u:Usuario {nombre: "Carlos"}) 
+
+CREATE (l)-[:ES_PRESTADO]->(u); 
+
+  
+
+MATCH (l:Libro {titulo: "1984"}), (u:Usuario {nombre: "María"}) 
+
+CREATE (l)-[:ES_PRESTADO]->(u); 
+
+   
+
+MATCH (l:Libro {titulo: "El Principito"}), (u:Usuario {nombre: "María"}) CREATE (l)-[:ES_PRESTADO]->(u); 
+
+ 
+
+MATCH (l:Libro {titulo: "La Odisea"}), (u:Usuario {nombre: "Ana"}) CREATE (l)-[:ES_PRESTADO]->(u); 
+
+ 
+
+ 
+
+ 
+
+// Relaciones ORGANIZA (Biblioteca -> Evento)  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Central"}), (e:Evento {nombre: "Lectura de poesía"})   
+
+CREATE (b)-[:ORGANIZA]->(e);  
+
+  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Norte"}), (e:Evento {nombre: "Taller de escritura"})  
+
+CREATE (b)-[:ORGANIZA]->(e);  
+
+  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Sur"}), (e:Evento {nombre: "Cine debate"})  
+
+CREATE (b)-[:ORGANIZA]->(e);  
+
+  
+
+ MATCH (b:Biblioteca {nombre: "Biblioteca Central"}), (e:Evento {nombre: "Taller de escritura"}) CREATE (b)-[:ORGANIZA]->(e); 
+
+  
+
+MATCH (b:Biblioteca {nombre: "Biblioteca Norte"}), (e:Evento {nombre: "Cine debate"}) CREATE (b)-[:ORGANIZA]->(e); 
+
+ 
+
+// Relaciones ASISTE (Usuario -> Evento)  
+
+MATCH (u:Usuario {nombre: "Juan"}), (e:Evento {nombre: "Lectura de poesía"})  
+
+CREATE (u)-[:ASISTE]->(e);  
+
+  
+
+MATCH (u:Usuario {nombre: "Luis"}), (e:Evento {nombre: "Lectura de poesía"})  
+
+CREATE (u)-[:ASISTE]->(e);  
+
+  
+
+MATCH (u:Usuario {nombre: "Ana"}), (e:Evento {nombre: "Taller de escritura"})  
+
+CREATE (u)-[:ASISTE]->(e);  
+
+  
+
+MATCH (u:Usuario {nombre: "Sofía"}), (e:Evento {nombre: "Taller de escritura"})  
+
+CREATE (u)-[:ASISTE]->(e);  
+
+  
+
+MATCH (u:Usuario {nombre: "Carlos"}), (e:Evento {nombre: "Cine debate"})  
+
+CREATE (u)-[:ASISTE]->(e);  
+
+  
+
+MATCH (u:Usuario {nombre: "María"}), (e:Evento {nombre: "Cine debate"})  
+
+CREATE (u)-[:ASISTE]->(e);  
+
+  
+
+MATCH (u:Usuario {nombre: "Carlos"}), (e:Evento {nombre: "Lectura de poesía"}) CREATE (u)-[:ASISTE]->(e); 
+
+ 
+
+// Relacionar usuarios con libros  
+
+MATCH (u:Usuario {nombre: "Juan"}), (l:Libro {titulo: "Don Quijote"})  
+
+CREATE (u)-[:ES_PRESTADO]->(l);    
+
+  
+
+MATCH (u:Usuario {nombre: "María"}), (l:Libro {titulo: "Cien años de soledad"})   
+
+CREATE (u)-[:ES_PRESTADO]->(l);  
+
+  
+
+MATCH (u:Usuario {nombre: "Luis"}), (l:Libro {titulo: "La Odisea"})  
+
+CREATE (u)-[:ES_PRESTADO]->(l);  
+
+MATCH (u:Usuario {nombre: "Ana"}), (l:Libro {titulo: "El Principito"})   
+
+CREATE (u)-[:ES_PRESTADO]->(l);  
+
+  
+
+MATCH (u:Usuario {nombre: "Juan"}), (e:Evento {nombre: "Taller de escritura"}) 
+
+CREATE (u)-[:ASISTE]->(e); 
+
+  
+
+MATCH (u:Usuario {nombre: "María"}), (e:Evento {nombre: "Lectura de poesía"}) 
+
+CREATE (u)-[:ASISTE]->(e); 
+
+  
+
+MATCH (u:Usuario {nombre: "Luis"}), (e:Evento {nombre: "Cine debate"}) 
+
+CREATE (u)-[:ASISTE]->(e); 
+
+CONSULTAS BASICAS:
+CONSULTA 1:
+MATCH (l:Libro) 
+
+RETURN l.titulo AS Título, l.isbn AS ISBN 
+
+CONSULTA 2:
+MATCH (u:Usuario)-[:ASISTE]->(e:Evento {nombre: "Lectura de poesía"}) 
+
+RETURN u.nombre AS Usuario 
+
+ 
+ 
+
+
+CONSULTAS INTERMEDIAS:
+CONSULTA 1:
+MATCH (b:Biblioteca)-[:TIENE]->(l:Libro) 
+
+RETURN b.nombre AS Biblioteca, COUNT(l) AS TotalLibros 
+
+ORDER BY TotalLibros DESC 
+CONSULTA 2:
+MATCH (b:Biblioteca)-[:ORGANIZA]->(e:Evento)<-[:ASISTE]-(u:Usuario) 
+
+RETURN b.nombre AS Biblioteca,  
+
+       e.nombre AS Evento, 
+
+       COUNT(DISTINCT u) AS CantidadAsistentes 
+
+ORDER BY CantidadAsistentes DESC 
+
+CONSULTAS AVANZADAS:
+CONSULTA 1:
+MATCH p = (b:Biblioteca)-[:ORGANIZA]->(e:Evento) 
+
+           <-[:ASISTE]-(u:Usuario) 
+
+           -[:ES_PRESTADO]->(l:Libro) 
+
+           <-[:TIENE]-(b) 
+
+RETURN p 
+ 
+
+CONSULTA 2:
+MATCH (u:Usuario)-[:ES_PRESTADO|ASISTE*..3]-(n)-[:ORGANIZA|TIENE|ASISTE*..3]
+-(e:Evento {nombre: "Cine debate"}) WHERE (n:Libro OR n:Biblioteca OR n:Usuario) 
+ u.nombre AS UsuarioRelacionadoCineDebate 
